@@ -7,9 +7,10 @@ const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const etapasRouter = require('./routes/etapas');
 
 const app = express();
-const mongodb = 'mongodb+srv://lalves86:p3SXGK6PBUHCGuBL@cluster0-sammj.mongodb.net/test?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true';
+const mongodb = 'mongodb+srv://lalves86:p3SXGK6PBUHCGuBL@cluster0-sammj.mongodb.net/lu-teperino-arq?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true';
 
 mongoose.connect(mongodb, {
   useNewUrlParser: true,
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/etapas', etapasRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
