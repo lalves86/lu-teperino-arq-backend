@@ -1,4 +1,3 @@
-const axios = require('axios');
 const Etapa = require('../models/ListadeEtapas');
 
 module.exports = {
