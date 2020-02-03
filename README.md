@@ -33,7 +33,7 @@ Clonar o repositório, fazer a instalação das dependências e acessar localmen
 
 ```
 {
-	"titulo": "Título da etapa", //String
+  "titulo": "Título da etapa", //String
   "descricao": "Descrição da etapa", //String
   "concluido": 0, //Number
   "detalhes": ["Sub-etapa 1", "Entrega 1"], //Array de strings
