@@ -6,10 +6,13 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+const authMiddleware = require('./middlewares/auth');
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const etapasRouter = require('./routes/etapas');
-const orcamentosRouter = require('./routes/orcamentos.js');
+const orcamentosRouter = require('./routes/orcamentos');
+const sessionRouter = require('./routes/session');
 
 const app = express();
 const mongodb = 'mongodb+srv://lalves86:p3SXGK6PBUHCGuBL@cluster0-sammj.mongodb.net/lu-teperino-arq?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true';
@@ -34,8 +37,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Rotas públicas
+app.use('/login', sessionRouter);
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// Middleware de autenticação
+app.use(authMiddleware.authHeader);
+
+// Rotas que exigem validação
+app.use('/usuarios', usersRouter);
 app.use('/etapas', etapasRouter);
 app.use('/orcamentos', orcamentosRouter);
 
