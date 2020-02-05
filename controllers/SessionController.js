@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Yup = require('yup');
-const bcrypt = require('bcryptjs');
 
-const Usuario = require('../models/Usuario');
+const sessionServices = require('../services/sessionServices');
 const authConfig = require('../config/auth');
 
 module.exports = {
@@ -18,15 +17,13 @@ module.exports = {
 
     const { email, password } = req.body;
 
-    const usuario = await Usuario.findOne({ email });
+    const usuario = await sessionServices.store(email, password);
 
-    if(!usuario) {
-      return res.status(401).json({ error: 'Usuário não encontrado' });
+    if(usuario == 'Usuário não encontrado') {
+      return res.status(401).json({ error: usuario });
     }
 
-    const passwordCheck = await bcrypt.compare(password, usuario.password_hash);
-
-    if(!passwordCheck) {
+    if(usuario == 'Senha incorreta') {
       return res.status(401).json({ error: 'Senha incorreta' });
     }
 
