@@ -3,12 +3,14 @@
 */
 const Etapa = require('../models/ListadeEtapas');
 
+const percentConcluded = require('../utils/percentConcluded');
+
 module.exports = {
 
   // Retorna todas as etapas cadastradas no banco de dados
   async index() {
     const etapas = await Etapa.find();
-
+    
     return etapas;
   },
 
@@ -20,7 +22,7 @@ module.exports = {
   },
 
   // Executa a rotina de criação de uma nova etapa no banco
-  async store(titulo, descricao, concluido, detalhes) {
+  async store(titulo, descricao, detalhes) {
 
     const etapaExists = await Etapa.findOne({ descricao });
 
@@ -31,7 +33,7 @@ module.exports = {
     const etapa = await Etapa.create({
       titulo,
       descricao,
-      concluido,
+      concluido: 0,
       detalhes,
     });
 
@@ -54,12 +56,9 @@ module.exports = {
       etapa.descricao = body.descricao;
     }
 
-    if(body.concluido) {
-      etapa.concluido = body.concluido;
-    }
-
     if(body.detalhes) {
       etapa.detalhes = body.detalhes;
+      etapa.concluido = percentConcluded.calculate(etapa.detalhes);
     }
     
    await etapa.save();
