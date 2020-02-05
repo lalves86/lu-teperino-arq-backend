@@ -33,7 +33,6 @@ module.exports = {
     const schema = Yup.object().shape({
       titulo: Yup.string().required(),
       descricao: Yup.string().required(),
-      concluido: Yup.number(),
       detalhes: Yup.array(),
     });
 
@@ -43,13 +42,12 @@ module.exports = {
     }
 
     const {
-      titulo, descricao, concluido, detalhes,
+      titulo, descricao, detalhes,
     } = req.body;
 
     const etapa = await etapasServices.store(
       titulo,
       descricao,
-      concluido,
       detalhes,
     );
 
@@ -67,7 +65,6 @@ module.exports = {
     const schema = Yup.object().shape({
       titulo: Yup.string(),
       descricao: Yup.string(),
-      concluido: Yup.number(),
       detalhes: Yup.array(),
     });
 
