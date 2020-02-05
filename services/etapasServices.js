@@ -30,10 +30,12 @@ module.exports = {
       return null;
     }
 
+    const concluido = percentConcluded.calculate(detalhes);
+
     const etapa = await Etapa.create({
       titulo,
       descricao,
-      concluido: 0,
+      concluido,
       detalhes,
     });
 
