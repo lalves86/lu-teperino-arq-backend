@@ -46,9 +46,25 @@ module.exports = {
       return null;
     }
 
-    const updatedEtapa = await etapa.update(body);
+    if(body.titulo) {
+      etapa.titulo = body.titulo;
+    }
 
-    return updatedEtapa;
+    if(body.descricao) {
+      etapa.descricao = body.descricao;
+    }
+
+    if(body.concluido) {
+      etapa.concluido = body.concluido;
+    }
+
+    if(body.detalhes) {
+      etapa.detalhes = body.detalhes;
+    }
+    
+   await etapa.save();
+
+    return etapa;
   },
 
   // Apagar o resgistro de uma etapa
