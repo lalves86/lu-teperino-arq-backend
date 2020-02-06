@@ -34,6 +34,15 @@ module.exports = {
       nome: Yup.string().required(),
       email: Yup.string().required(),
       password: Yup.string().required(),
+      empresa: Yup.string().required(),
+      doc_identificacao: Yup.number().required(),
+      contato: Yup.number().required(),
+      cep: Yup.number().required(),
+      rua: Yup.string().required(),
+      numero: Yup.number().required(),
+      complemento: Yup.string(),
+      cidade: Yup.string().required(),
+      estado: Yup.string().required(),
     });
 
     // Caso os dados não estejam no formato esperado, retorna um erro
@@ -41,12 +50,33 @@ module.exports = {
       return res.status(400).json({ error: 'Falha na validação' });
     }
 
-    const { nome, email, password } = req.body;
+    const { 
+      nome,
+      email, 
+      password, 
+      empresa, 
+      doc_identificacao, 
+      contato, 
+      cep,
+      rua,
+      numero,
+      complemento,
+      cidade,
+      estado } = req.body;
 
     const usuario = await usuarioServices.store(
       nome,
-      email,
-      password,
+      email, 
+      password, 
+      empresa, 
+      doc_identificacao, 
+      contato, 
+      cep,
+      rua,
+      numero,
+      complemento,
+      cidade,
+      estado
     );
 
     // Verifica se usuário está tentando inserir um e-mail já cadastrado
@@ -58,6 +88,15 @@ module.exports = {
       id: usuario.id,
       nome: usuario.nome,
       email: usuario.email,
+      empresa: usuario.empresa, 
+      doc_identificacao: usuario.doc_identificacao, 
+      contato: usuario.contato, 
+      cep: usuario.cep,
+      rua: usuario.rua,
+      numero: usuario.numero,
+      complemento: usuario.complemento,
+      cidade: usuario.cidade,
+      estado: usuario.estado
     }
     );
   },
@@ -72,7 +111,16 @@ module.exports = {
       password: Yup.string().when('oldPassword', (oldPassword, field) => 
         oldPassword ? field.required() : field),
       confirmPassword: Yup.string().when('password', (password, field) => 
-        password ? field.required().oneOf([Yup.ref('password')]) : field)
+        password ? field.required().oneOf([Yup.ref('password')]) : field),
+      empresa: Yup.string(),
+      doc_identificacao: Yup.number(),
+      contato: Yup.number(),
+      cep: Yup.number(),
+      rua: Yup.string(),
+      numero: Yup.number(),
+      complemento: Yup.string(),
+      cidade: Yup.string(),
+      estado: Yup.string(),
     });
 
     // Caso os dados não estejam no formato esperado, retorna um erro
@@ -94,6 +142,10 @@ module.exports = {
 
     if(usuario == 'password mismatch') {
       return res.status(401).json({ error: 'Senha incorreta' });
+    }
+
+    if(usuario == 'Senha alterada com sucesso') {
+      return res.status(200).json({ message: usuario });
     }
 
     return res.json(usuario);

@@ -22,7 +22,7 @@ module.exports = {
   },
 
   // Executa a rotina de criação de uma nova etapa no banco
-  async store(nome, email, password) {
+  async store(nome, email, password, empresa, doc_identificacao, contato, cep, rua, numero, complemento, cidade, estado) {
 
     const usuarioExists = await Usuario.findOne({ email });
 
@@ -36,6 +36,15 @@ module.exports = {
       nome,
       email,
       password_hash,
+      empresa,
+      doc_identificacao,
+      contato,
+      cep,
+      rua,
+      numero,
+      complemento,
+      cidade,
+      estado,
     });
 
     return usuario;
@@ -44,40 +53,36 @@ module.exports = {
   // Alteração de uma etapa no banco  
   async update(id, body) {
     //const usuario = await Usuario.findByIdAndUpdate(id, { $set: body }, { new: true });
-    const usuario = await Usuario.findById(id);
-
-    const passwordCheck = await bcrypt.compare(body.oldPassword, usuario.password_hash);
+    let usuario = await Usuario.findById(id);
 
     if (!usuario) {
       return null;
     }
 
     if (body.email && body.email !== usuario.email) {
-      const usuarioExists = await Usuario.findOne({ email: usuario.email });
+      const usuarioExists = await Usuario.findOne({ email: body.email });
       if (usuarioExists) {
         return 'usuario existente'
       }
     }
 
-    if (body.oldPassword && !passwordCheck) {
-      return 'password mismatch';
-    }
+    if (body.oldPassword) {
+      const passwordCheck = await bcrypt.compare(body.oldPassword, usuario.password_hash);
 
-    if(body.nome) {
-      usuario.nome = body.nome;
-    }
-
-    if(body.email) {
-      usuario.email = body.email;
+      if (!passwordCheck) {
+        return 'password mismatch';
+      }
     }
 
     if(body.password) {
       usuario.password_hash = await bcrypt.hash(body.password, 10);
+      usuario.save();
+      return 'Senha alterada com sucesso'
     }
 
-    await usuario.save();
+    const updatedUsuario = await Usuario.findByIdAndUpdate(id, body, { new: true });
 
-    return usuario;
+    return updatedUsuario;
   },
 
   // Apagar o resgistro de uma etapa

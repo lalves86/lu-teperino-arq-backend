@@ -7,15 +7,17 @@ const UsuarioSchema = new Schema({
   nome: String,
   email: String,
   password_hash: String,
+  empresa: String,
+  registro: Number,
+  doc_identificacao: Number,
+  contato: Number,
+  cep: Number,
+  rua: String,
+  numero: Number,
+  complemento: String,
+  cidade: String,
+  estado: String,
 });
-
-/* UsuarioSchema.pre('save', async usuario => {
-  if(usuario.password) {
-    usuario.password_hash = bcrypt.hashSync(usuario.password, 10);
-  }
-
-  return await usuario.password_hash;
-}); */
  
 UsuarioSchema.virtual('password').get(async usuario => {
   return await usuario.password;
