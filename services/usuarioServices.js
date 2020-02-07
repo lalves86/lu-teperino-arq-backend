@@ -22,7 +22,7 @@ module.exports = {
   },
 
   // Executa a rotina de criação de uma nova etapa no banco
-  async store(nome, email, password, empresa, doc_identificacao, contato, cep, rua, numero, complemento, cidade, estado) {
+  async store(nome, email, password, profissional, empresa, doc_identificacao, contato, cep, rua, numero, complemento, cidade, estado) {
 
     const usuarioExists = await Usuario.findOne({ email });
 
@@ -35,6 +35,7 @@ module.exports = {
     const usuario = await Usuario.create({
       nome,
       email,
+      profissional,
       password_hash,
       empresa,
       doc_identificacao,

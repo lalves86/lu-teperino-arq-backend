@@ -14,6 +14,7 @@ const etapasRouter = require('./routes/etapas');
 const orcamentosRouter = require('./routes/orcamentos');
 const sessionRouter = require('./routes/session');
 const cadastroRouter = require('./routes/cadastro');
+const etapasProjetoRouter = require('./routes/etapasProjeto');
 
 const app = express();
 const mongodb = 'mongodb+srv://lalves86:p3SXGK6PBUHCGuBL@cluster0-sammj.mongodb.net/lu-teperino-arq?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true';
@@ -46,6 +47,7 @@ app.use('/', indexRouter);
 app.use(authMiddleware.authHeader);
 
 // Rotas que exigem validação
+app.use('/projetos', etapasProjetoRouter);
 app.use('/usuarios', usersRouter);
 app.use('/etapas', etapasRouter);
 app.use('/orcamentos', orcamentosRouter);

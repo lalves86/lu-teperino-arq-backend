@@ -15,6 +15,11 @@ const EtapasSchema = new Schema(
     descricao: String,
     concluido: Number,
     detalhes: [detalhesSchema],
+    projeto_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Projeto',
+      required: true,
+    },
   }
 )
 

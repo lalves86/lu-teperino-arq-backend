@@ -34,6 +34,7 @@ module.exports = {
       nome: Yup.string().required(),
       email: Yup.string().required(),
       password: Yup.string().required(),
+      profissional: Yup.boolean().required(),
       empresa: Yup.string().required(),
       doc_identificacao: Yup.number().required(),
       contato: Yup.number().required(),
@@ -53,7 +54,8 @@ module.exports = {
     const { 
       nome,
       email, 
-      password, 
+      password,
+      profissional,
       empresa, 
       doc_identificacao, 
       contato, 
@@ -67,7 +69,8 @@ module.exports = {
     const usuario = await usuarioServices.store(
       nome,
       email, 
-      password, 
+      password,
+      profissional,
       empresa, 
       doc_identificacao, 
       contato, 
@@ -88,6 +91,7 @@ module.exports = {
       id: usuario.id,
       nome: usuario.nome,
       email: usuario.email,
+      profissional: usuario.profissional,
       empresa: usuario.empresa, 
       doc_identificacao: usuario.doc_identificacao, 
       contato: usuario.contato, 
@@ -107,6 +111,7 @@ module.exports = {
     const schema = Yup.object().shape({
       nome: Yup.string(),
       email: Yup.string(),
+      profissional: Yup.boolean(),
       oldPassword: Yup.string(),
       password: Yup.string().when('oldPassword', (oldPassword, field) => 
         oldPassword ? field.required() : field),
