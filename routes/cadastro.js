@@ -4,12 +4,7 @@ const router = express.Router();
 const UsuariosController = require('../controllers/UsuariosController');
 
 /* GET users listing. */
-router.get('/', UsuariosController.index);
 
-router.get('/:id', UsuariosController.show);
-
-router.put('/:id', UsuariosController.update);
-
-router.delete('/:id', UsuariosController.delete);
+router.post('/', UsuariosController.store);
 
 module.exports = router;
