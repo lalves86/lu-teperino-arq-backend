@@ -34,6 +34,7 @@ module.exports = {
       titulo: Yup.string().required(),
       descricao: Yup.string().required(),
       detalhes: Yup.array(),
+      projeto_id: Yup.string().required(),
     });
 
     // Caso os dados não estejam no formato esperado, retorna um erro
@@ -42,13 +43,14 @@ module.exports = {
     }
 
     const {
-      titulo, descricao, detalhes,
+      titulo, descricao, detalhes, projeto_id
     } = req.body;
 
     const etapa = await etapasServices.store(
       titulo,
       descricao,
       detalhes,
+      projeto_id,
     );
 
     // Verifica se usuário está tentando inserir uma etapa com um nome igual

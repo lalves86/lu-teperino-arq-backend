@@ -22,7 +22,7 @@ module.exports = {
   },
 
   // Executa a rotina de criação de uma nova etapa no banco
-  async store(titulo, descricao, detalhes) {
+  async store(titulo, descricao, detalhes, projeto_id) {
 
     const etapaExists = await Etapa.findOne({ descricao });
 
@@ -37,6 +37,7 @@ module.exports = {
       descricao,
       concluido,
       detalhes,
+      projeto_id,
     });
 
     return etapa;

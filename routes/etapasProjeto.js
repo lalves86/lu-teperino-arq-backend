@@ -6,7 +6,9 @@ const ProjetoEtapasController = require('../controllers/ProjetoEtapasController'
 
 router.get('/', ProjetoEtapasController.index);
 
-router.post('/:profissionalId', ProjetoEtapasController.store);
+router.get('/:projetoId', ProjetoEtapasController.show);
+
+router.post('/', ProjetoEtapasController.store);
 
 /* router.get('/:id', EtapasController.show);
 
