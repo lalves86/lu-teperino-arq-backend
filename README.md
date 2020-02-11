@@ -21,15 +21,30 @@ Clonar o repositório, fazer a instalação das dependências e acessar localmen
 
 ## Rotas e Métodos
 
+### Projetos
+
+* GET /projetos - retorna a lista com todos os projetos cadastrados
+* GET /projetos/:projetoId - retorna as informações de um projeto por seu id
+* POST /projetos - rota de cadastro de um novo projeto
+
+#### Corpo da requisição
+
+```
+{
+  "nome": "nome do projeto", //String
+  "cliente_id": "xxxxxxxxxxx" //String ObjectId
+}
+```
+
+### Etapas
+
 * GET /etapas - retorna uma lista de etapas cadastradas, mostrando todas as atividades relativas a um projeto de arquitetura
 * GET /etapas/:id - retorna apenas as informações de uma etapa específica
 * POST /etapas - Rota de cadastro de novas etapas e atividades
 * PUT /etapas/:id - Altera etapas cadastradas
 * DELETE /etapas/:id - Remove etapas cadastradas
 
-## Corpo da requisição
-
-### Rota /etapas
+#### Corpo da requisição
 
 ```
 {
@@ -37,6 +52,7 @@ Clonar o repositório, fazer a instalação das dependências e acessar localmen
   "descricao": "Descrição da etapa", //String
   "concluido": 0, //Number
   "detalhes": ["Sub-etapa 1", "Entrega 1"], //Array de strings
+  "projeto_id": "xxxxxxxxxxx" //String ObjectId
 }
 ```
 
