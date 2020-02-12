@@ -28,9 +28,11 @@ module.exports = {
 
     if (etapaExists) {
       return null;
-    }
+    } 
 
-    const concluido = percentConcluded.calculate(detalhes);
+    if(detalhes) {
+      var concluido = percentConcluded.calculate(detalhes);
+    }
 
     const etapa = await Etapa.create({
       titulo,

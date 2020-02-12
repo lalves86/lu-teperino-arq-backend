@@ -3,17 +3,20 @@ const Usuario = require('../models/Usuario');
 const Etapa = require('../models/ListadeEtapas');
 
 module.exports = {
-  async index() {
-    const projetos = await Projeto.find().populate('cliente_id').populate('profissional_id');
+  async index(id) {
+    const profissional_id = id;
+    const projetos = await Projeto.find({
+      profissional_id
+    }).populate('cliente_id').populate('profissional_id');
     
     return projetos;
   },
 
-  async show(id) {
-    const projeto = await Etapa.find({ projeto_id: id }).populate('projeto');
-/*     const projeto = await (await Projeto.findById(id)
+  async show(id, profissional_id) {
+    //const projeto = await Projeto.find({ _id: id, profissional_id }).populate('projeto');
+     const projeto = await (await Projeto.findById(id)
       .populate('cliente_id')
-      .populate('profissional_id')); */
+      .populate('profissional_id'));
 
     if (!projeto)
       return 'ID do projeto não encontrado';

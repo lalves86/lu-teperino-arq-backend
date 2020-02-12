@@ -4,7 +4,7 @@ const ProjetoEtapaServices = require('../services/ProjetoEtapaServices');
 
 module.exports = {
   async index(req, res) {
-    const projetos = await ProjetoEtapaServices.index();
+    const projetos = await ProjetoEtapaServices.index(req.userId);
 
     return res.json(projetos);
   },
@@ -12,7 +12,7 @@ module.exports = {
   async show(req, res) {
     const { projetoId } = req.params;
 
-    const projeto = await ProjetoEtapaServices.show(projetoId);
+    const projeto = await ProjetoEtapaServices.show(projetoId, req.userId);
 
     if (projeto === 'ID do projeto não encontrado')
       return res.status(400).json({ error: projeto});

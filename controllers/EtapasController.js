@@ -53,9 +53,9 @@ module.exports = {
       projeto_id,
     );
 
-    // Verifica se usuário está tentando inserir uma etapa com um nome igual
+    // Verifica se usuário está tentando inserir uma etapa com uma descrição igual
     if (!etapa) {
-      return res.status(400).json({ error: 'Já existe uma etapa com este nome' });
+      return res.status(400).json({ error: 'Já existe uma etapa com esta descrição' });
     }
 
     return res.json(etapa);
