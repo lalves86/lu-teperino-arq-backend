@@ -12,7 +12,7 @@ module.exports = {
   async show(req, res) {
     const { projetoId } = req.params;
 
-    const projeto = await ProjetoEtapaServices.show(projetoId, req.userId);
+    const projeto = await ProjetoEtapaServices.show(projetoId);
 
     if (projeto === 'ID do projeto não encontrado')
       return res.status(400).json({ error: projeto});

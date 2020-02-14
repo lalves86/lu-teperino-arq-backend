@@ -65,6 +65,10 @@ module.exports = {
       etapa.detalhes = body.detalhes;
       etapa.concluido = percentConcluded.calculate(etapa.detalhes);
     }
+
+    if(body.projeto_id) {
+      etapa.projeto_id = body.projeto_id;
+    }
     
    await etapa.save();
 

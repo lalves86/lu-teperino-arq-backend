@@ -68,6 +68,7 @@ module.exports = {
       titulo: Yup.string(),
       descricao: Yup.string(),
       detalhes: Yup.array(),
+      projeto_id: Yup.string(),
     });
 
     // Caso os dados não estejam no formato esperado, retorna um erro

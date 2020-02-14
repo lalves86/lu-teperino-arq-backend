@@ -12,15 +12,19 @@ module.exports = {
     return projetos;
   },
 
-  async show(id, profissional_id) {
-    //const projeto = await Projeto.find({ _id: id, profissional_id }).populate('projeto');
-     const projeto = await (await Projeto.findById(id)
-      .populate('cliente_id')
-      .populate('profissional_id'));
+  async show(id) {
+    const projeto = []
+     const info = await Projeto.findById(id).select('id nome')
+      .populate('cliente_id', '_id nome email')
+      .populate('profissional_id', '_id nome email empresa');
 
-    if (!projeto)
+      if (!projeto)
       return 'ID do projeto não encontrado';
-    
+      
+      const etapas = await Etapa.find({projeto_id: id}).select('_id titulo descricao detalhes');
+
+      projeto.push({ info: info, etapas: etapas });
+
     return projeto;
   },
 
