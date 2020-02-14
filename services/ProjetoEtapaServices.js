@@ -33,10 +33,12 @@ module.exports = {
     if (!arquiteto.profissional)
       return 'Apenas profissionais podem cadastrar projetos';
 
-    const client = await Usuario.findById(cliente_id);
-
-    if(!client)
-      return 'Id de cliente não encontrado';
+    if(cliente_id) {
+      const client = await Usuario.findById(cliente_id);
+  
+      if(!client)
+        return 'Id de cliente não encontrado';
+    }
 
     const projeto = await Projeto.create({
       nome,

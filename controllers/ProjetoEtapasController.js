@@ -22,7 +22,7 @@ module.exports = {
 
   async store(req, res) {
     const { nome, cliente_id } = req.body;
-    const profissionalId = req.userId;
+    const profissionalId = req.userId; 
 
     const projeto = await ProjetoEtapaServices.store(nome, profissionalId, cliente_id);
 
