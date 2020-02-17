@@ -35,7 +35,7 @@ module.exports = {
       email: Yup.string().required(),
       password: Yup.string().required(),
       profissional: Yup.boolean().required(),
-      empresa: Yup.string().required(),
+      empresa: Yup.string(),
       doc_identificacao: Yup.number().required(),
       contato: Yup.number().required(),
       cep: Yup.number().required(),
@@ -47,33 +47,34 @@ module.exports = {
     });
 
     // Caso os dados não estejam no formato esperado, retorna um erro
-    if(!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Falha na validação' });
     }
 
-    const { 
+    const {
       nome,
-      email, 
+      email,
       password,
       profissional,
-      empresa, 
-      doc_identificacao, 
-      contato, 
+      empresa,
+      doc_identificacao,
+      contato,
       cep,
       rua,
       numero,
       complemento,
       cidade,
-      estado } = req.body;
+      estado,
+    } = req.body;
 
     const usuario = await usuarioServices.store(
       nome,
-      email, 
+      email,
       password,
       profissional,
-      empresa, 
-      doc_identificacao, 
-      contato, 
+      empresa,
+      doc_identificacao,
+      contato,
       cep,
       rua,
       numero,
@@ -84,7 +85,9 @@ module.exports = {
 
     // Verifica se usuário está tentando inserir um e-mail já cadastrado
     if (!usuario) {
-      return res.status(400).json({ error: 'Já existe um usuário com este e-mail' });
+      return res
+        .status(400)
+        .json({ error: 'Já existe um usuário com este e-mail' });
     }
 
     return res.json({
@@ -92,19 +95,18 @@ module.exports = {
       nome: usuario.nome,
       email: usuario.email,
       profissional: usuario.profissional,
-      empresa: usuario.empresa, 
-      doc_identificacao: usuario.doc_identificacao, 
-      contato: usuario.contato, 
+      empresa: usuario.empresa,
+      doc_identificacao: usuario.doc_identificacao,
+      contato: usuario.contato,
       cep: usuario.cep,
       rua: usuario.rua,
       numero: usuario.numero,
       complemento: usuario.complemento,
       cidade: usuario.cidade,
-      estado: usuario.estado
-    }
-    );
+      estado: usuario.estado,
+    });
   },
-  
+
   // Alteração dos dados de um usuário
   async update(req, res) {
     // Validação dos dados enviados no formulário
@@ -113,10 +115,12 @@ module.exports = {
       email: Yup.string(),
       profissional: Yup.boolean(),
       oldPassword: Yup.string(),
-      password: Yup.string().when('oldPassword', (oldPassword, field) => 
-        oldPassword ? field.required() : field),
-      confirmPassword: Yup.string().when('password', (password, field) => 
-        password ? field.required().oneOf([Yup.ref('password')]) : field),
+      password: Yup.string().when('oldPassword', (oldPassword, field) =>
+        oldPassword ? field.required() : field
+      ),
+      confirmPassword: Yup.string().when('password', (password, field) =>
+        password ? field.required().oneOf([Yup.ref('password')]) : field
+      ),
       empresa: Yup.string(),
       doc_identificacao: Yup.number(),
       contato: Yup.number(),
@@ -129,7 +133,7 @@ module.exports = {
     });
 
     // Caso os dados não estejam no formato esperado, retorna um erro
-    if(!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Falha na validação' });
     }
     const { id } = req.params;
@@ -141,15 +145,15 @@ module.exports = {
       return res.status(404).json({ error: 'Usuário não encontrado' });
     }
 
-    if(usuario == 'usuario existente') {
-      return res.status(401).json({ error: 'E-mail já está cadastrado'});
+    if (usuario === 'usuario existente') {
+      return res.status(401).json({ error: 'E-mail já está cadastrado' });
     }
 
-    if(usuario == 'password mismatch') {
+    if (usuario === 'password mismatch') {
       return res.status(401).json({ error: 'Senha incorreta' });
     }
 
-    if(usuario == 'Senha alterada com sucesso') {
+    if (usuario === 'Senha alterada com sucesso') {
       return res.status(200).json({ message: usuario });
     }
 

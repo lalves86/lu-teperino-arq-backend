@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-//const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const UsuarioSchema = new Schema({
   nome: String,
@@ -23,7 +23,7 @@ const UsuarioSchema = new Schema({
     ref: 'Projeto',
   },
 });
- 
+
 UsuarioSchema.virtual('password').get(async usuario => {
   return await usuario.password;
 });

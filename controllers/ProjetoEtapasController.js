@@ -12,8 +12,8 @@ module.exports = {
 
     const projeto = await ProjetoEtapaServices.show(projetoId);
 
-    if (projeto === 'ID do projeto não encontrado')
-      return res.status(400).json({ error: projeto });
+    if (!projeto[0].info)
+      return res.status(400).json({ error: 'Id do projeto não encontrado' });
 
     return res.json(projeto);
   },
@@ -35,6 +35,18 @@ module.exports = {
       return res.status(400).json({ error: projeto });
 
     if (projeto === 'Id de cliente não encontrado')
+      return res.status(400).json({ error: projeto });
+
+    return res.json(projeto);
+  },
+
+  async delete(req, res) {
+    const { projetoId } = req.params;
+    const { userId } = req;
+
+    const projeto = await ProjetoEtapaServices.delete(projetoId, userId);
+
+    if (projeto === 'Apenas profissionais podem deletar projetos')
       return res.status(400).json({ error: projeto });
 
     return res.json(projeto);

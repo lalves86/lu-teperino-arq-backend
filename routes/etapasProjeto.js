@@ -10,12 +10,6 @@ router.get('/:projetoId', ProjetoEtapasController.show);
 
 router.post('/', ProjetoEtapasController.store);
 
-/* router.get('/:id', EtapasController.show);
-
-router.post('/', EtapasController.store);
-
-router.put('/:id', EtapasController.update);
-
-router.delete('/:id', EtapasController.delete); */
+router.delete('/:projetoId', ProjetoEtapasController.delete);
 
 module.exports = router;

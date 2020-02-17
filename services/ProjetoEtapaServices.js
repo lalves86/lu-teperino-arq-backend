@@ -4,9 +4,20 @@ const Etapa = require('../models/ListadeEtapas');
 
 module.exports = {
   async index(id) {
-    const profissional_id = id;
+    const usuario = await Usuario.findById(id);
+
+    if (usuario.profissional) {
+      const projetos = await Projeto.find({
+        profissional_id: id,
+      })
+        .populate('cliente_id')
+        .populate('profissional_id');
+
+      return projetos;
+    }
+
     const projetos = await Projeto.find({
-      profissional_id,
+      cliente_id: id,
     })
       .populate('cliente_id')
       .populate('profissional_id');
@@ -17,11 +28,9 @@ module.exports = {
   async show(id) {
     const projeto = [];
     const info = await Projeto.findById(id)
-      .select('id nome')
+      .select('id nome ativo')
       .populate('cliente_id', '_id nome email')
       .populate('profissional_id', '_id nome email empresa');
-
-    if (!projeto) return 'ID do projeto não encontrado';
 
     const etapas = await Etapa.find({ projeto_id: id }).select(
       '_id titulo descricao detalhes'
@@ -50,8 +59,26 @@ module.exports = {
       nome,
       profissional_id,
       cliente_id,
+      ativo: true,
     });
 
     return projeto;
+  },
+
+  async delete(projeto_id, user_id) {
+    const usuario = await Usuario.findById(user_id);
+
+    if (usuario.profissional) {
+      const projeto = await Projeto.findByIdAndUpdate(
+        projeto_id,
+        {
+          ativo: false,
+        },
+        { new: true, useFindAndModify: false }
+      );
+
+      return projeto;
+    }
+    return 'Apenas profissionais podem deletar projetos';
   },
 };

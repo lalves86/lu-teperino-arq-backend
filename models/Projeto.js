@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-//const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const ProjetoSchema = new Schema({
   nome: {
@@ -15,8 +15,11 @@ const ProjetoSchema = new Schema({
   },
   cliente_id: {
     type: Schema.Types.ObjectId,
-    ref: 'Usuario'
-  }
+    ref: 'Usuario',
+  },
+  ativo: {
+    type: Schema.Types.Boolean,
+  },
 });
 
 module.exports = mongoose.model('Projeto', ProjetoSchema);
