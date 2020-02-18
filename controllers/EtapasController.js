@@ -38,29 +38,29 @@ module.exports = {
     });
 
     // Caso os dados não estejam no formato esperado, retorna um erro
-    if(!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Falha na validação' });
     }
 
-    const {
-      titulo, descricao, detalhes, projeto_id
-    } = req.body;
+    const { titulo, descricao, detalhes, projeto_id } = req.body;
 
     const etapa = await etapasServices.store(
       titulo,
       descricao,
       detalhes,
-      projeto_id,
+      projeto_id
     );
 
     // Verifica se usuário está tentando inserir uma etapa com uma descrição igual
     if (!etapa) {
-      return res.status(400).json({ error: 'Já existe uma etapa com esta descrição' });
+      return res
+        .status(400)
+        .json({ error: 'Já existe uma etapa com esta descrição' });
     }
 
     return res.json(etapa);
   },
-  
+
   // Alteração do conteúdo de uma etapa
   async update(req, res) {
     // Validação dos dados enviados no formulário
@@ -72,7 +72,7 @@ module.exports = {
     });
 
     // Caso os dados não estejam no formato esperado, retorna um erro
-    if(!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Falha na validação' });
     }
     const { id } = req.params;

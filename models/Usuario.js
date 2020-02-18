@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const bcrypt = require('bcryptjs');
 
 const { Schema } = mongoose;
 
@@ -24,8 +23,8 @@ const UsuarioSchema = new Schema({
   },
 });
 
-UsuarioSchema.virtual('password').get(async usuario => {
-  return await usuario.password;
+UsuarioSchema.virtual('password').get(usuario => {
+  return usuario.password;
 });
 
 module.exports = mongoose.model('Usuario', UsuarioSchema);
