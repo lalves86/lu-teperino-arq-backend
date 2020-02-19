@@ -67,6 +67,23 @@ module.exports = {
     return projeto;
   },
 
+  async update(projeto_id, user_id, nome) {
+    const usuario = await Usuario.findById(user_id);
+
+    if (usuario.profissional) {
+      const projeto = await Projeto.findByIdAndUpdate(
+        projeto_id,
+        {
+          nome,
+        },
+        { new: true, useFindAndModify: false }
+      );
+
+      return projeto;
+    }
+    return 'Apenas profissionais podem alterar projetos';
+  },
+
   async delete(projeto_id, user_id) {
     const usuario = await Usuario.findById(user_id);
 

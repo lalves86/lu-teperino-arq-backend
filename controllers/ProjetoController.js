@@ -40,6 +40,16 @@ module.exports = {
     return res.json(projeto);
   },
 
+  async update(req, res) {
+    const { projetoId } = req.params;
+    const { userId } = req;
+    const { nome } = req.body;
+
+    const projeto = await ProjetoServices.update(projetoId, userId, nome);
+
+    return res.json(projeto);
+  },
+
   async delete(req, res) {
     const { projetoId } = req.params;
     const { userId } = req;
