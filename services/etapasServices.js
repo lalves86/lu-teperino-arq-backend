@@ -1,13 +1,27 @@
 /* 
   Acessa os modelos e retorna os dados para o controlador
 */
-const Etapa = require('../models/ListadeEtapas');
+const Etapa = require('../models/Etapa');
+const Usuario = require('../models/Usuario');
 
 const percentConcluded = require('../utils/percentConcluded');
 
 module.exports = {
   // Retorna todas as etapas cadastradas no banco de dados
   async index(projeto_id, usuario_id) {
+    const usuario = await Usuario.findById(usuario_id);
+
+    if (usuario.profissional) {
+      const etapas = await Etapa.find({
+        projeto_id,
+      }).populate({
+        path: 'projeto_id',
+        where: { profisisonal_id: usuario_id },
+      });
+
+      return etapas;
+    }
+
     const etapas = await Etapa.find({
       projeto_id,
     }).populate({
@@ -15,14 +29,14 @@ module.exports = {
       where: { cliente_id: usuario_id },
     });
 
-    console.log(usuario_id);
-
     return etapas;
   },
 
   // Retorna uma etapa específica pelo id
-  async show(id) {
-    const etapa = await Etapa.findById(id);
+  async show(projeto_id, etapa_id) {
+    const etapa = await Etapa.findById(etapa_id, {
+      projeto_id,
+    }).select('id titulo descricao detalhes');
 
     return etapa;
   },

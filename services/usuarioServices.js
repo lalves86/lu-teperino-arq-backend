@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
 
 module.exports = {
-
   // Retorna todas as etapas cadastradas no banco de dados
   async index() {
     const usuarios = await Usuario.find();
@@ -22,8 +21,21 @@ module.exports = {
   },
 
   // Executa a rotina de criação de uma nova etapa no banco
-  async store(nome, email, password, profissional, empresa, doc_identificacao, contato, cep, rua, numero, complemento, cidade, estado) {
-
+  async store(
+    nome,
+    email,
+    password,
+    profissional,
+    empresa,
+    doc_identificacao,
+    contato,
+    cep,
+    rua,
+    numero,
+    complemento,
+    cidade,
+    estado
+  ) {
     const usuarioExists = await Usuario.findOne({ email });
 
     if (usuarioExists) {
@@ -51,10 +63,10 @@ module.exports = {
     return usuario;
   },
 
-  // Alteração de uma etapa no banco  
+  // Alteração de uma etapa no banco
   async update(id, body) {
-    //const usuario = await Usuario.findByIdAndUpdate(id, { $set: body }, { new: true });
-    let usuario = await Usuario.findById(id);
+    // const usuario = await Usuario.findByIdAndUpdate(id, { $set: body }, { new: true });
+    const usuario = await Usuario.findById(id);
 
     if (!usuario) {
       return null;
@@ -63,25 +75,30 @@ module.exports = {
     if (body.email && body.email !== usuario.email) {
       const usuarioExists = await Usuario.findOne({ email: body.email });
       if (usuarioExists) {
-        return 'usuario existente'
+        return 'usuario existente';
       }
     }
 
     if (body.oldPassword) {
-      const passwordCheck = await bcrypt.compare(body.oldPassword, usuario.password_hash);
+      const passwordCheck = await bcrypt.compare(
+        body.oldPassword,
+        usuario.password_hash
+      );
 
       if (!passwordCheck) {
         return 'password mismatch';
       }
     }
 
-    if(body.password) {
+    if (body.password) {
       usuario.password_hash = await bcrypt.hash(body.password, 10);
       usuario.save();
-      return 'Senha alterada com sucesso'
+      return 'Senha alterada com sucesso';
     }
 
-    const updatedUsuario = await Usuario.findByIdAndUpdate(id, body, { new: true });
+    const updatedUsuario = await Usuario.findByIdAndUpdate(id, body, {
+      new: true,
+    });
 
     return updatedUsuario;
   },

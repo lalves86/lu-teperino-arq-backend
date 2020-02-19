@@ -1,6 +1,6 @@
 const Projeto = require('../models/Projeto');
 const Usuario = require('../models/Usuario');
-const Etapa = require('../models/ListadeEtapas');
+const Etapa = require('../models/Etapa');
 
 module.exports = {
   async index(id) {

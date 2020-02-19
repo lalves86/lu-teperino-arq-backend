@@ -6,7 +6,7 @@ const EtapasController = require('../controllers/EtapasController');
 
 router.get('/:projetoId', EtapasController.index);
 
-router.get('/:id', EtapasController.show);
+router.get('/:projetoId/:etapaId', EtapasController.show);
 
 router.post('/', EtapasController.store);
 

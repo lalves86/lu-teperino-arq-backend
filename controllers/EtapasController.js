@@ -19,9 +19,9 @@ module.exports = {
   },
   // Retorna uma etapa específica
   async show(req, res) {
-    const { id } = req.params;
+    const { projetoId, etapaId } = req.params;
 
-    const etapa = await etapasServices.show(id);
+    const etapa = await etapasServices.show(projetoId, etapaId);
 
     // Checa se o parâmetro da requisição é um id existente
     if (!etapa) {
