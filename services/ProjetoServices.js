@@ -9,18 +9,20 @@ module.exports = {
     if (usuario.profissional) {
       const projetos = await Projeto.find({
         profissional_id: id,
-      })
-        .populate('cliente_id')
-        .populate('profissional_id');
+      }).populate({
+        path: 'cliente_id profissional_id',
+        select: 'id nome email',
+      });
 
       return projetos;
     }
 
     const projetos = await Projeto.find({
       cliente_id: id,
-    })
-      .populate('cliente_id')
-      .populate('profissional_id');
+    }).populate({
+      path: 'cliente_id profissional_id',
+      select: 'id nome email',
+    });
 
     return projetos;
   },

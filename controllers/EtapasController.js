@@ -10,7 +10,10 @@ const etapasServices = require('../services/etapasServices');
 module.exports = {
   // Retorna todas as etapas
   async index(req, res) {
-    const etapas = await etapasServices.index();
+    const projeto = req.params.projetoId;
+    const usuario = req.userId;
+
+    const etapas = await etapasServices.index(projeto, usuario);
 
     return res.json(etapas);
   },
@@ -55,7 +58,7 @@ module.exports = {
     if (!etapa) {
       return res
         .status(400)
-        .json({ error: 'Já existe uma etapa com esta descrição' });
+        .json({ error: 'Já existe uma etapa cadastrada com estes dados' });
     }
 
     return res.json(etapa);

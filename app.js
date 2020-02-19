@@ -14,7 +14,7 @@ const etapasRouter = require('./routes/etapas');
 const orcamentosRouter = require('./routes/orcamentos');
 const sessionRouter = require('./routes/session');
 const cadastroRouter = require('./routes/cadastro');
-const etapasProjetoRouter = require('./routes/etapasProjeto');
+const projetoRouter = require('./routes/projetos');
 
 const app = express();
 const mongodb =
@@ -48,7 +48,7 @@ app.use('/', indexRouter);
 app.use(authMiddleware.authHeader);
 
 // Rotas que exigem validação
-app.use('/projetos', etapasProjetoRouter);
+app.use('/projetos', projetoRouter);
 app.use('/usuarios', usersRouter);
 app.use('/etapas', etapasRouter);
 app.use('/orcamentos', orcamentosRouter);

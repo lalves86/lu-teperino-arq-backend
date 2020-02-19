@@ -4,7 +4,7 @@ const router = express.Router();
 
 const EtapasController = require('../controllers/EtapasController');
 
-router.get('/', EtapasController.index);
+router.get('/:projetoId', EtapasController.index);
 
 router.get('/:id', EtapasController.show);
 

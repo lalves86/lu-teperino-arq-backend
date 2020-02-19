@@ -6,11 +6,17 @@ const Etapa = require('../models/ListadeEtapas');
 const percentConcluded = require('../utils/percentConcluded');
 
 module.exports = {
-
   // Retorna todas as etapas cadastradas no banco de dados
-  async index() {
-    const etapas = await Etapa.find();
-    
+  async index(projeto_id, usuario_id) {
+    const etapas = await Etapa.find({
+      projeto_id,
+    }).populate({
+      path: 'projeto_id',
+      where: { cliente_id: usuario_id },
+    });
+
+    console.log(usuario_id);
+
     return etapas;
   },
 
@@ -23,14 +29,19 @@ module.exports = {
 
   // Executa a rotina de criação de uma nova etapa no banco
   async store(titulo, descricao, detalhes, projeto_id) {
+    const etapaExists = await Etapa.find({
+      titulo,
+      descricao,
+      projeto_id,
+    });
 
-    const etapaExists = await Etapa.findOne({ descricao });
+    console.log(etapaExists);
 
-    if (etapaExists) {
+    if (etapaExists[0]) {
       return null;
-    } 
+    }
 
-    if(detalhes) {
+    if (detalhes) {
       var concluido = percentConcluded.calculate(detalhes);
     }
 
@@ -45,7 +56,7 @@ module.exports = {
     return etapa;
   },
 
-  // Alteração de uma etapa no banco  
+  // Alteração de uma etapa no banco
   async update(id, body) {
     const etapa = await Etapa.findById(id);
 
@@ -53,24 +64,24 @@ module.exports = {
       return null;
     }
 
-    if(body.titulo) {
+    if (body.titulo) {
       etapa.titulo = body.titulo;
     }
 
-    if(body.descricao) {
+    if (body.descricao) {
       etapa.descricao = body.descricao;
     }
 
-    if(body.detalhes) {
+    if (body.detalhes) {
       etapa.detalhes = body.detalhes;
       etapa.concluido = percentConcluded.calculate(etapa.detalhes);
     }
 
-    if(body.projeto_id) {
+    if (body.projeto_id) {
       etapa.projeto_id = body.projeto_id;
     }
-    
-   await etapa.save();
+
+    await etapa.save();
 
     return etapa;
   },

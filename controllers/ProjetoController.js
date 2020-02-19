@@ -1,8 +1,8 @@
-const ProjetoEtapaServices = require('../services/ProjetoEtapaServices');
+const ProjetoServices = require('../services/ProjetoServices');
 
 module.exports = {
   async index(req, res) {
-    const projetos = await ProjetoEtapaServices.index(req.userId);
+    const projetos = await ProjetoServices.index(req.userId);
 
     return res.json(projetos);
   },
@@ -10,7 +10,7 @@ module.exports = {
   async show(req, res) {
     const { projetoId } = req.params;
 
-    const projeto = await ProjetoEtapaServices.show(projetoId);
+    const projeto = await ProjetoServices.show(projetoId);
 
     if (!projeto[0].info)
       return res.status(400).json({ error: 'Id do projeto não encontrado' });
@@ -22,7 +22,7 @@ module.exports = {
     const { nome, cliente_id } = req.body;
     const profissionalId = req.userId;
 
-    const projeto = await ProjetoEtapaServices.store(
+    const projeto = await ProjetoServices.store(
       nome,
       profissionalId,
       cliente_id
@@ -44,7 +44,7 @@ module.exports = {
     const { projetoId } = req.params;
     const { userId } = req;
 
-    const projeto = await ProjetoEtapaServices.delete(projetoId, userId);
+    const projeto = await ProjetoServices.delete(projetoId, userId);
 
     if (projeto === 'Apenas profissionais podem deletar projetos')
       return res.status(400).json({ error: projeto });

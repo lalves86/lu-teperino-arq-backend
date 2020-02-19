@@ -17,10 +17,6 @@ const UsuarioSchema = new Schema({
   complemento: String,
   cidade: String,
   estado: String,
-  projeto_id: {
-    type: Schema.Types.ObjectId,
-    ref: 'Projeto',
-  },
 });
 
 UsuarioSchema.virtual('password').get(usuario => {
