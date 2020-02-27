@@ -2,7 +2,9 @@ const Arquivo = require('../models/Arquivo');
 
 module.exports = {
   async index() {
-    const arquivos = await Arquivo.find();
+    const arquivos = await Arquivo.find()
+      .select('nome path url')
+      .populate('etapa_id');
 
     return arquivos;
   },
