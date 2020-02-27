@@ -18,4 +18,8 @@ const ArquivoSchema = new Schema({
   },
 });
 
+ArquivoSchema.virtual('url').get(arquivo => {
+  return `http://localhost:3333/public/images/${arquivo.path}`;
+});
+
 module.exports = mongoose.model('Arquivo', ArquivoSchema);
