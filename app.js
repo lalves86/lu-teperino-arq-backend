@@ -15,6 +15,7 @@ const orcamentosRouter = require('./routes/orcamentos');
 const sessionRouter = require('./routes/session');
 const cadastroRouter = require('./routes/cadastro');
 const projetoRouter = require('./routes/projetos');
+const arquivosRouter = require('./routes/arquivos');
 
 const app = express();
 const mongodb =
@@ -52,6 +53,7 @@ app.use('/projetos', projetoRouter);
 app.use('/usuarios', usersRouter);
 app.use('/etapas', etapasRouter);
 app.use('/orcamentos', orcamentosRouter);
+app.use('/arquivos', arquivosRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
