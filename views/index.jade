@@ -3,4 +3,4 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  img(src="http://localhost:3333/public/images/8b153315abf69d75838af2e3754cf28a.jpg")
+  img(src=`${process.env.APP_URL}/public/images/8b153315abf69d75838af2e3754cf28a.jpg`)
