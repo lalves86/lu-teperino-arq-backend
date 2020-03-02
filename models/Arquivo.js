@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const path = require('path');
 
 const { Schema } = mongoose;
 
@@ -22,7 +23,7 @@ const ArquivoSchema = new Schema(
 );
 
 ArquivoSchema.virtual('url').get(function() {
-  return `http://localhost:3333/public/images/${this.path}`;
+  return `${path.resolve(__dirname)}/public/images/${this.path}`;
 });
 
 module.exports = mongoose.model('Arquivo', ArquivoSchema);
