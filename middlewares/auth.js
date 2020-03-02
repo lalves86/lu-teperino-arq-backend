@@ -7,7 +7,7 @@ module.exports = {
   async authHeader(req, res, next) {
     const auth = req.headers.authorization;
 
-    if(!auth) {
+    if (!auth) {
       return res.status(401).json({ error: 'Token não fornecido' });
     }
 
@@ -19,8 +19,8 @@ module.exports = {
       req.userId = decoded.id;
 
       return next();
-    } catch(err) {
+    } catch (err) {
       return res.status(401).json({ error: 'Token inválido' });
     }
-  }
-}
+  },
+};

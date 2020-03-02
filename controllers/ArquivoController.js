@@ -13,8 +13,6 @@ module.exports = {
 
     const arquivo = await arquivoServices.store(nome, path, etapaId);
 
-    console.log(arquivo.url);
-
     return res.json(arquivo);
   },
 };
