@@ -17,6 +17,7 @@ const sessionRouter = require('./routes/session');
 const cadastroRouter = require('./routes/cadastro');
 const projetoRouter = require('./routes/projetos');
 const arquivosRouter = require('./routes/arquivos');
+const pagamentosRouter = require('./routes/pagamentos');
 
 const app = express();
 const mongodb =
@@ -55,6 +56,7 @@ app.use('/usuarios', usersRouter);
 app.use('/etapas', etapasRouter);
 app.use('/orcamentos', orcamentosRouter);
 app.use('/arquivos', arquivosRouter);
+app.use('/pagamentos', pagamentosRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
